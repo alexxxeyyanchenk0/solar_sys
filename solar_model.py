@@ -1,6 +1,9 @@
 # coding: utf-8
 # license: GPLv3
 
+import numpy as np
+
+
 gravitational_constant = 6.67408E-11
 """Гравитационная постоянная Ньютона G"""
 
@@ -20,8 +23,16 @@ def calculate_force(body, space_objects):
         if body == obj:
             continue  # тело не действует гравитационной силой на само себя!
         r = ((body.x - obj.x)**2 + (body.y - obj.y)**2)**0.5
-        r = max(r, body.R) # FIXME: обработка аномалий при прохождении одного тела сквозь другое
-        pass  # FIXME: Взаимодействие объектов
+        r = max(r, body.R)
+        if r == body.R:
+            body.Fx += 0
+            body.Fy += 0
+        else:
+            force = (gravitational_constant * body.m * obj.m) / (r ** 2)
+            alpha = np.arctg((body.x - obj.x)/(body.y - obj.y))
+            body.Fx += force * np.cos(alpha)
+            body.Fy += force * np.sin(alpha)
+
 
 def move_space_object(body, dt):
     """Перемещает тело в соответствии с действующей на него силой.
@@ -30,12 +41,12 @@ def move_space_object(body, dt):
 
     **body** — тело, которое нужно переместить.
     """
-    old = body.x  # FIXME: Вывести формулы для ускорения, скоростей и координат
     ax = body.Fx/body.m
-    body.x += 24
-    ay = body.Fy*body.m
-    body.y = 42
-    body.Vy += 4*dt
+    body.x += body.Vx * dt + ax * dt**2 / 2
+    body.Vx += ax * dt
+    ay = body.Fy/body.m
+    body.y = body.Vy * dt + ay * dt**2 / 2
+    body.Vy += ay*dt
 
 
 def recalculate_space_objects_positions(space_objects, dt):
