@@ -53,14 +53,14 @@ def parse_star_parameters(line, star):
 
     **star** — объект звезды.
     """
-    star_patametres = line.split(' ')
-    star.R = star_patametres[1]
-    star.color = star_patametres[2]
-    star.m = star_patametres[3]
-    star.x = star_patametres[4]
-    star.y = star_patametres[5]
-    star.Vx = star_patametres[6]
-    star.Vy = star_patametres[7]
+    line = line.split()
+    star.R = int(line[1])
+    star.color = line[2]
+    star.m = float(line[3])
+    star.x = float(line[4])
+    star.y = float(line[5])
+    star.Vx = float(line[6])
+    star.Vy = float(line[7])
 
 
 def parse_planet_parameters(line, planet):
@@ -81,14 +81,14 @@ def parse_planet_parameters(line, planet):
 
     **planet** — объект планеты.
     """
-    planet_parametres = line.split(' ')
-    planet.R = planet_parametres[1]
-    planet.color = planet_parametres[2]
-    planet.m = planet_parametres[3]
-    planet.x = planet_parametres[4]
-    planet.y = planet_parametres[5]
-    planet.Vx = planet_parametres[6]
-    planet.Vy = planet_parametres[7]
+    line = line.split()
+    planet.R = int(line[1])
+    planet.color = line[2]
+    planet.m = float(line[3])
+    planet.x = float(line[4])
+    planet.y = float(line[5])
+    planet.Vx = float(line[6])
+    planet.Vy = float(line[7])
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
@@ -108,8 +108,10 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %d %d %d %d %d" % (obj, obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy))
-            # FIXME!
+            line = obj.type + '   ' + str(obj.R) + '   ' + obj.color + '   ' + str(obj.m) + '   ' + \
+                     str(round(obj.x, 3)) + '   ' + str(round(obj.y, 3)) + '   ' + str(round(obj.Vx, 3)) + '   ' + \
+                     str(round(obj.Vy, 3))
+            out_file.write(line + '\n')
 
 
 if __name__ == "__main__":
