@@ -29,7 +29,10 @@ def calculate_force(body, space_objects):
             body.Fy += 0
         else:
             force = (gravitational_constant * body.m * obj.m) / (r ** 2)
-            alpha = np.arctg((body.x - obj.x)/(body.y - obj.y))
+            if (body.y - obj.y) == 0:
+                alpha = np.pi/2
+            else:
+                alpha = np.arctan((body.x - obj.x)/(body.y - obj.y))
             body.Fx += force * np.cos(alpha)
             body.Fy += force * np.sin(alpha)
 
