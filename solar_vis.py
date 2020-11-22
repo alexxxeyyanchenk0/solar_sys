@@ -59,12 +59,6 @@ def scale_y(y):
     """
     return int(-y*scale_factor + window_height//2)
 
-
-
-if __name__ == "__main__":
-    print("This module is not for direct call!")
-
-
 class Drawer:
     def __init__(self, screen):
         self.screen = screen
@@ -83,10 +77,14 @@ class Drawer:
 class DrawableObject:
     def __init__(self, obj):
         self.obj = obj
-        self.x = scale_x(self.obj.x)
-        self.y = scale_y(self.obj.y)
-        self.r = self.obj.R*scale_factor
+        self.colors = {"red": (255, 0, 0), "orange": (255, 128, 0), "blue": (0, 0, 255), "green": (0, 255, 0),
+                       "yellow": (255, 255, 0), "white": (255, 255, 255), "gray": (100, 100, 100), "cyan": (0, 255, 255)}
 
     def draw(self, surface):
-        if window_width/2 < self.x < window_width/2 and window_heigth/2 < self.y < window_height:
-            pg.draw.circle(screen, self.obj.color, (self.x, self.y), self.r)
+        x = scale_x(self.obj.x)
+        y = scale_y(self.obj.y)
+        r = self.obj.R
+        self.image = pg.draw.circle(surface, self.colors[self.obj.color], (x, y), r)
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")

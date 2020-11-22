@@ -81,7 +81,7 @@ def parse_planet_parameters(line, planet):
 
     **planet** — объект планеты.
     """
-    line = line.split()
+    line = line.split(' ')
     planet.R = int(line[1])
     planet.color = line[2]
     planet.m = float(line[3])
@@ -108,7 +108,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            line = obj.type + '   ' + str(obj.R) + '   ' + obj.color + '   ' + str(obj.m) + '   ' + \
+            line = str(obj.type) + '   ' + str(obj.R) + '   ' + obj.color + '   ' + str(obj.m) + '   ' + \
                      str(round(obj.x, 3)) + '   ' + str(round(obj.y, 3)) + '   ' + str(round(obj.Vx, 3)) + '   ' + \
                      str(round(obj.Vy, 3))
             out_file.write(line + '\n')
