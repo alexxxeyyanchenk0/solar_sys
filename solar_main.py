@@ -9,6 +9,7 @@ from solar_objects import *
 import thorpy
 import time
 import numpy as np
+from tkinter.filedialog import *
 
 timer = None
 
@@ -68,10 +69,18 @@ def open_file():
     global model_time
 
     model_time = 0.0
-    in_filename = "solar_system.txt"
+    in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
+
+def file_dialog():
+    """Открывает диалоговое окно выбора имени файла и вызывает
+    функцию считывания параметров системы небесных тел из данного файла.
+    Считанные объекты сохраняются в глобальный список space_objects
+    """
+    out_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
+    write_space_objects_data_to_file(out_filename, space_objects)
 
 def handle_events(events, menu):
     global alive
