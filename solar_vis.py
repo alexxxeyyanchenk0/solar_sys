@@ -88,5 +88,5 @@ class DrawableObject:
         self.r = self.obj.R*scale_factor
 
     def draw(self, surface):
-        if - width/2 < self.x < width/2 and - heigth/2 < self.y < height:
+        if window_width/2 < self.x < window_width/2 and window_heigth/2 < self.y < window_height:
             pg.draw.circle(screen, self.obj.color, (self.x, self.y), self.r)
